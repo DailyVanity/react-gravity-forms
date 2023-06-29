@@ -1,11 +1,9 @@
-import fetch from "isomorphic-unfetch";
-import { getFieldPrepopulatedValue } from "./index";
-import { validateField } from "../validation";
-import checkConditionalLogic from "./checkConditionalLogic";
+import { getFieldPrepopulatedValue } from './index';
+import { validateField } from '../validation';
+import checkConditionalLogic from './checkConditionalLogic';
 
 async function fetchForm({
   initialPage,
-  fetchOptions,
   setFormData,
   setFormValues,
   setActivePage,
@@ -13,44 +11,43 @@ async function fetchForm({
   setConditionalIds,
   setPages,
   setIsMultiPart,
+  gfForm,
   populatedFields,
   populatedEntry,
-  getParams,
-  backendUrl,
-  formID,
 }) {
   let isMultipart = false;
+  let form = {};
 
-  const queryString = getParams
-    ? Object.keys(getParams)
-        .map(key => `${key}=${getParams[key]}`)
-        .join("&")
-    : "";
-  const requestUrl = `${backendUrl}/${formID}${
-    queryString ? `?${queryString}` : ""
-  }`;
+  if (gfForm && gfForm.fields) {
+    form = {
+      ...gfForm,
+      fields: gfForm.fields.nodes.map((node) => ({
+        ...node,
+        formId: 1,
+        type: node.type?.toLowerCase(),
+      })),
+    };
+  }
 
-  const form = await fetch(requestUrl, fetchOptions)
-    .then(resp => resp.json())
-    .then(response => response)
-    .catch(() => false);
-
-  if (form) {
+  if (form?.fields) {
     const formValues = {};
     const conditionFields = [];
     const conditionalIds = [];
     const pages = [];
+
+    const fields = form?.fields;
+
     // eslint-disable-next-line no-restricted-syntax
-    for (const field of form.fields) {
+    for (const field of form?.fields) {
       let value;
 
-      if (field.type === "page") {
+      if (field.type === 'page') {
         pages.push(field.id);
       }
 
       value = getFieldPrepopulatedValue(field, populatedFields, populatedEntry);
 
-      if (field.type === "fileupload") {
+      if (field.type === 'fileupload') {
         isMultipart = true;
       }
 
@@ -60,7 +57,7 @@ async function fetchForm({
           id: field.id,
           conditionalLogic: field.conditionalLogic,
         };
-        const ids = field.conditionalLogic.rules.map(item => item.fieldId);
+        const ids = field.conditionalLogic.rules.map((item) => item.fieldId);
         for (let i = 0; i < ids.length; i++) {
           const id = parseInt(ids[i]);
           if (conditionalIds.indexOf(id) === -1) {
@@ -89,6 +86,7 @@ async function fetchForm({
         formValues
       );
     }
+
     setFormData(form);
     setFormValues(formValues);
     setActivePage(initialPage || (form.pagination ? 1 : false));

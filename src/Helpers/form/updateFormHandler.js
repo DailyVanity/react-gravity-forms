@@ -1,5 +1,5 @@
-import { validateField } from "../validation";
-import checkConditionalLogic from "./checkConditionalLogic";
+import { validateField } from '../validation';
+import checkConditionalLogic from './checkConditionalLogic';
 
 export default (
   field,
@@ -12,11 +12,12 @@ export default (
   ...props
 ) => {
   const { onChange } = props;
-  const { id, type, isRequired } = field;
+  const { id, isRequired } = field;
+  let type = field?.type;
   // Set new value
   let value;
 
-  if (field.type === "checkbox") {
+  if (field.type === 'checkbox') {
     const values = [...formValues[field.id].value];
     const index = values.indexOf(event.target.value);
     if (index > -1) {
@@ -25,7 +26,7 @@ export default (
       values.push(event.target.value);
     }
     value = values;
-  } else if (field.type == "date" && field.dateType !== "datepicker") {
+  } else if (field.type == 'date' && field.dateType !== 'datepicker') {
     const { subId, dateLabel } = field;
     const values = [...formValues[field.id].value];
     values[subId] = {
@@ -33,24 +34,23 @@ export default (
       label: dateLabel,
     };
     value = values;
-  } else if (field.type === "consent") {
-    value = event.target ? event.target.checked : "null";
-  } else if (field.type === "address") {
+  } else if (field.type === 'consent') {
+    value = event.target ? event.target.checked : 'null';
+  } else if (field.type === 'address') {
     let values = { ...formValues[field.id].value };
     if (inputID) {
       values[inputID] = event.target.value;
     }
 
     value = values;
-  } else if (field.type === "postcode") {
+  } else if (field.type === 'postcode') {
     value = event.target ? event.target.value : null;
     Object.values(formValues).filter(
-      item => item.cssClass === "field--street"
+      (item) => item.cssClass === 'field--street'
     )[0].value = event?.street;
-    Object.values(formValues).filter(
-      item => item.cssClass === "field--city"
-    )[0].value = event?.city;
-  } else if (field.type === "name") {
+    Object.values(formValues).filter((item) => item.cssClass === 'field--city')[0].value =
+      event?.city;
+  } else if (field.type === 'name') {
     let values = [...formValues[field.id].value];
 
     const index = values.indexOf(inputID);
@@ -63,8 +63,8 @@ export default (
 
     value = event.target.value;
   } else if (
-    field.type === "password" ||
-    (field.type === "email" && field.emailConfirmEnabled)
+    field.type === 'password' ||
+    (field.type === 'email' && field.emailConfirmEnabled)
   ) {
     const { subId } = field;
     const values =
@@ -76,11 +76,11 @@ export default (
     };
     value = values;
   } else {
-    value = event.target ? event.target.value : "null";
+    value = event.target ? event.target.value : 'null';
   }
   // if field is IBAN
-  if (type === "text" && field.cssClass.indexOf("iban") > -1) {
-    type = "iban";
+  if (type === 'text' && field.cssClass === 'iban' > -1) {
+    type = 'iban';
   }
 
   // Validate field
@@ -92,14 +92,11 @@ export default (
     formValues[id].value = value;
     for (let i = 0; i < conditionFields.length; i++) {
       const { id } = conditionFields[i];
-      const hide = checkConditionalLogic(
-        conditionFields[i].conditionalLogic,
-        formValues
-      );
+      const hide = checkConditionalLogic(conditionFields[i].conditionalLogic, formValues);
       formValues[id].hideField = hide;
       if (hide) {
         if (formValues[id].isRequired && hide) {
-          formValues[id].value = "";
+          formValues[id].value = '';
         }
         formValues[id].valid = !!formValues[id].isRequired;
       }
