@@ -3,6 +3,7 @@ import {
   AddressFieldFragment,
   DateFieldFragment,
   NumberFieldFragment,
+  TextAreaFieldFragment,
   TextFieldFragment,
   WebsiteFieldFragment,
 } from './fragments';
@@ -11,6 +12,7 @@ const GetForm = gql`
   ${AddressFieldFragment}
   ${DateFieldFragment}
   ${NumberFieldFragment}
+  ${TextAreaFieldFragment}
   ${TextFieldFragment}
   ${WebsiteFieldFragment}
   query GetForm($formID: ID!) {
@@ -65,6 +67,7 @@ const GetForm = gql`
           ...AddressFieldFragment
           ...DateFieldFragment
           ...NumberFieldFragment
+          ...TextAreaFieldFragment
           ...TextFieldFragment
           ...WebsiteFieldFragment
           ... on RadioField {
