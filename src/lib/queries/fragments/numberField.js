@@ -24,6 +24,7 @@ const NumberFieldFragment = gql`
     displayOnly
     errorMessage
     hasAutocomplete
+    id
     inputName
     inputType
     isCalculation

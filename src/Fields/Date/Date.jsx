@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
 // components
-import DatePicker from "./DatePicker";
-import DateSelect from "./DateSelect";
-import DateInput from "./DateInput";
-import InputLabel from "../../FormElements/InputLabel";
+import DatePicker from './DatePicker';
+import DateSelect from './DateSelect';
+import DateInput from './DateInput';
+import InputLabel from '../../FormElements/InputLabel';
 
 export default ({
   field,
@@ -37,17 +37,15 @@ export default ({
     defaultValue,
   } = field;
 
-  const { Box = "div" } = styledComponents || false;
+  const { Box = 'div' } = styledComponents || false;
 
   // convert date format
-  const format = dateFormat && dateFormat === "dmy" ? "dd/MM/yyyy" : false;
+  const format = dateFormat && dateFormat === 'dmy' ? 'dd/MM/yyyy' : false;
   let selectedValue = defaultValue ? new Date(defaultValue) : false;
 
   if (format && defaultValue) {
-    const tmpFormat = defaultValue.indexOf("/") > -1;
-    const dateParts = tmpFormat
-      ? defaultValue.split("/")
-      : defaultValue.split("-");
+    const tmpFormat = defaultValue.indexOf('/') > -1;
+    const dateParts = tmpFormat ? defaultValue.split('/') : defaultValue.split('-');
 
     const dateObject = tmpFormat
       ? new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0])
@@ -58,22 +56,22 @@ export default ({
 
   const [startDate, setDate] = useState(selectedValue);
 
-  const getFormattedInputs = items => {
+  const getFormattedInputs = (items) => {
     if (dateType) {
-      if (dateType === "datefield") {
+      if (dateType === 'datefield') {
         switch (dateFormat) {
-          case "dmy":
-          case "dmy_dash":
-          case "dmy_dot":
+          case 'dmy':
+          case 'dmy_dash':
+          case 'dmy_dot':
             return [items[1], items[0], items[2]];
-          case "ymd_slash":
-          case "ymd_dash":
-          case "ymd_dot":
+          case 'ymd_slash':
+          case 'ymd_dash':
+          case 'ymd_dot':
             return [items[2], items[0], items[1]];
           default:
             return items;
         }
-      } else if (dateType === "datedropdown") {
+      } else if (dateType === 'datedropdown') {
         return [items[1], items[0], items[2]];
       }
     }
@@ -101,11 +99,11 @@ export default ({
     ...props,
   };
 
-  const renderDateField = dateType => {
+  const renderDateField = (dateType) => {
     switch (dateType) {
-      case "datepicker":
+      case 'PICKER':
         return <DatePicker defaultProps={defaultProps} />;
-      case "datedropdown":
+      case 'DROPDOWN':
         return <DateSelect defaultProps={defaultProps} />;
       default:
         return <DateInput defaultProps={defaultProps} />;
@@ -120,7 +118,7 @@ export default ({
           ? `form-field error ${cssClass}`
           : `form-field ${cssClass}`
       }
-      style={{ display: hideField ? "none" : undefined }}
+      style={{ display: hideField ? 'none' : undefined }}
     >
       <InputLabel
         formId={formId}
@@ -131,14 +129,14 @@ export default ({
         styledComponent={styledComponents}
       />
       <div className={type}>
-        {descriptionPlacement === "above" && description && (
+        {descriptionPlacement === 'above' && description && (
           <div
             className="description"
             dangerouslySetInnerHTML={{ __html: description }}
           />
         )}
         {dateType && renderDateField(dateType)}
-        {descriptionPlacement !== "above" && description && (
+        {descriptionPlacement !== 'above' && description && (
           <div
             className="description"
             dangerouslySetInnerHTML={{ __html: description }}

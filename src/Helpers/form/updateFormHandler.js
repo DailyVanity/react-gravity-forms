@@ -26,7 +26,7 @@ export default (
       values.push(event.target.value);
     }
     value = values;
-  } else if (field.type == 'date' && field.dateType !== 'datepicker') {
+  } else if (field.type == 'date' && field.dateType !== 'PICKER') {
     const { subId, dateLabel } = field;
     const values = [...formValues[field.id].value];
     values[subId] = {
