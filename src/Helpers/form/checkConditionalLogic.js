@@ -1,6 +1,6 @@
 export default (condition, fields = false) => {
   console.log('condition: ',condition)
-  const { rules, actionType } = condition;
+  const { rules, actionType,logicType } = condition;
   if (!rules) return true;
 
   const formValues = fields || formValues;
@@ -13,7 +13,6 @@ export default (condition, fields = false) => {
   for (let i = 0; i < rules.length; i++) {
     const { fieldId, value, operator } = rules[i];
 
-
     const conditionFieldValue = formValues[fieldId].value && formValues[fieldId].value.value
       ? formValues[fieldId].value.value
       : formValues[fieldId].value || false;
@@ -21,10 +20,6 @@ export default (condition, fields = false) => {
     const stringValue = Array.isArray(conditionFieldValue)
       ? conditionFieldValue.join('')
       : conditionFieldValue;
-
-    console.log('hidebasedonrules',hideBasedOnRules)
-    // console.log('conditionfieldvalue: ', conditionFieldValue)
-    // console.log('stringvalue', stringValue)
 
     // Check if comparision value is empty
     if (!value) {
@@ -36,7 +31,6 @@ export default (condition, fields = false) => {
     } else if (stringValue && value === stringValue) {
       hideBasedOnRules[i] = actionType === 'hide';
     } else if (stringValue && stringValue.includes(value)) {
-      console.log("beacon",actionType)
       hideBasedOnRules[i] = actionType === 'hide';
     } else {
       hideBasedOnRules[i] = actionType !== 'hide';
@@ -47,9 +41,22 @@ export default (condition, fields = false) => {
       hideBasedOnRules[i] = !hideBasedOnRules[i];
     }
   }
+ 
+  console.log("hidebaseonrules",hideBasedOnRules)
 
-  // hideField = hideBasedOnRules.every(i => i === true);
+  // check if any of the fields are matched 
+  console.log('logictype',logicType)
+  if(logicType === "any"){
+    hideField = hideBasedOnRules.includes(true);
+  }
+
+  // check if all the fields match(are true)
+  if(logicType === "all"){
+    hideField = hideBasedOnRules.every(i => i === true);
+  }
+
   // formValues[id].hideField = hideField;
   // this.setState({ formValues });
+  console.log(hideField)
   return hideField;
 };
