@@ -12,7 +12,8 @@ export default (
   ...props
 ) => {
   const { onChange } = props;
-  const { id, type, isRequired } = field;
+  // TODO check if this the let is really needed
+  let { id, type, isRequired } = field;
   // Set new value
   let value;
 
