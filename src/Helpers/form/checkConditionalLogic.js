@@ -1,5 +1,4 @@
 export default (condition, fields = false) => {
-  console.log('condition: ',condition)
   const { rules, actionType,logicType } = condition;
   if (!rules) return true;
 
@@ -45,7 +44,10 @@ export default (condition, fields = false) => {
   console.log("hidebaseonrules",hideBasedOnRules)
 
   // check if any of the fields are matched 
-  console.log('logictype',logicType)
+  // console.log('logictype',logicType)
+
+  // hideField = !hideBasedOnRules.every(i => i != true);
+
   if(logicType === "any"){
     hideField = hideBasedOnRules.includes(true);
   }

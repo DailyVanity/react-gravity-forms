@@ -97,6 +97,7 @@ export default (
         conditionFields[i].conditionalLogic,
         formValues
       );
+      console.log('verstoppen ', hide)
       formValues[id].hideField = hide;
       if (hide) {
         if (formValues[id].isRequired && hide) {
