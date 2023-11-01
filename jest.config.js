@@ -12,6 +12,8 @@ module.exports = {
     : [],
   testEnvironment: "jsdom",
   setupFilesAfterEnv: ["<rootDir>/tests/setup.js"],
+  automock: false,
+  resetMocks: false,
 
   // https://stackoverflow.com/questions/39418555/syntaxerror-with-jest-and-react-and-importing-css-files
   moduleNameMapper: {
