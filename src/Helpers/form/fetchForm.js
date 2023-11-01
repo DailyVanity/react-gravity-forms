@@ -30,7 +30,7 @@ async function fetchForm({
     queryString ? `?${queryString}` : ""
   }`;
   
-  // console.log(await fetch("asd").then(res => res.json()).then(response => response))
+  console.log(await fetch("asd").then(res => res.json()).then(response => response))
 
   const form = await fetch(requestUrl, fetchOptions)
     .then(resp => resp.json())

@@ -1,4 +1,5 @@
 jest.mock("isomorphic-unfetch");
+// jest.mock('node-fetch');
 
 import { render, screen } from "@testing-library/react";
 import * as React from "react";
@@ -10,18 +11,11 @@ import { Response } from "node-fetch";
 import GFGetRequest from "./__mocks__/get.json";
 
 describe("test if a simple newsletter signup works", () => {
-
-  beforeEach(() => {
-    jest.spyOn(global, 'fetch').mockResolvedValue({
-      json: jest.fn().mockResolvedValue(new Response(JSON.stringify(GFGetRequest)))
-    })
-  });
-
   it("should render the form", async () => {
-    // fetch.mockReturnValue(
-      // Promise.resolve(new Response(JSON.stringify(GFGetRequest)))
-    // );
-
+    fetch.mockReturnValue(
+      Promise.resolve({ json: () => {JSON.stringify(GFGetRequest)} })
+    );
+    // dit werkt
     // console.log(await fetch("asd").then(res => res.json()).then(response => response))
 
     const component = await render(
@@ -34,9 +28,5 @@ describe("test if a simple newsletter signup works", () => {
       />
     );
     expect(component).toMatchSnapshot();
-  });
-
-  afterEach(() => {
-    jest.restoreAllMocks();
   });
 });
