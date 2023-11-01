@@ -1,5 +1,3 @@
-// jest.mock("isomorphic-unfetch");
-
 import {
   render,
   screen,
@@ -13,10 +11,11 @@ import { act } from "react-test-renderer";
 
 describe("test if a simple newsletter signup works", () => {
   it("should render the form", async () => {
+
+    // create an mock for fetch which returns a simple form 
     fetch.mockReturnValue(
       Promise.resolve({
-        json: () => GFGetRequest,
-        text: () => JSON.stringify(GFGetRequest),
+        json: () => GFGetRequest
       })
     );
 
