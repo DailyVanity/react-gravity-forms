@@ -10,6 +10,11 @@ This module includes a react component for dropping Gravity Forms from your Word
 $ npm install --save react-gravity-form
 ```
 
+## unit tests
+In this repo there are unit tests which test the rough lines of the form. This allows us to develop this application better and make shure every use case works.
+
+For testing we use [jest](http://jestjs.io/) and @testing-library/react
+
 ### Backend
 
 Make sure to create a custom GF endpoint to fetch the form. See [example](https://bitbucket.org/gohike/gravity-forms/src/devweek/gravityforms.php)
