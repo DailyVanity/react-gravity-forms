@@ -11,9 +11,8 @@ $ npm install --save react-gravity-form
 ```
 
 ## testing
-In this repo there are unit tests which test the business logic of the form. This allows us to develop this application better and make shure every use case works.
+[see the testing readme here](./tests/readme.md)
 
-For testing we use [jest](http://jestjs.io/) and [@testing-library/react](https://stackoverflow.com/a/74019619/15070611). We use @tesing-libary because it is much more powerfull then react-test-renderer and compared to enzyme it's not dead.
 
 ### Backend
 
