@@ -29,11 +29,15 @@ async function fetchForm({
   const requestUrl = `${backendUrl}/${formID}${
     queryString ? `?${queryString}` : ""
   }`;
+  console.log(requestUrl)
+  const form1 = await fetch(requestUrl, fetchOptions)
+  // console.log(form1)
+
 
   const form = await fetch(requestUrl, fetchOptions)
     .then(resp => resp.json())
     .then(response => response)
-    .catch(() => false);
+    .catch((err) => console.log(err));
 
   if (form) {
     const formValues = {};

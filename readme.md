@@ -10,10 +10,10 @@ This module includes a react component for dropping Gravity Forms from your Word
 $ npm install --save react-gravity-form
 ```
 
-## unit tests
-In this repo there are unit tests which test the rough lines of the form. This allows us to develop this application better and make shure every use case works.
+## testing
+In this repo there are unit tests which test the business logic of the form. This allows us to develop this application better and make shure every use case works.
 
-For testing we use [jest](http://jestjs.io/) and @testing-library/react
+For testing we use [jest](http://jestjs.io/) and [@testing-library/react](https://stackoverflow.com/a/74019619/15070611). We use @tesing-libary because it is much more powerfull then react-test-renderer and compared to enzyme it's not dead.
 
 ### Backend
 

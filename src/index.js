@@ -212,7 +212,6 @@ const GravityForm = props => {
         });
     }
   };
-
   return (
     <GFWrapper ref={wrapperRef} className="form-wrapper" id={`gravity_form_${formID}`}>
       {formData.title ? null : Loading && <Loading isLoading />}
