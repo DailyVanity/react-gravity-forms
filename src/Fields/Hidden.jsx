@@ -1,6 +1,5 @@
 import React from "react";
-// TODO reanable
-// import queryString from "query-string";
+import queryString from "query-string";
 
 export default ({
   field,
@@ -14,16 +13,16 @@ export default ({
 }) => {
   const { id, type, isRequired, customName, formId } = field;
   let prePopulated = false;
-  // if (field.allowsPrepopulate) {
-  //   const queries = queryString.parse(location.search);
-  //   prePopulated = queries[field.inputName];
-  // }
+  if (field.allowsPrepopulate) {
+    const queries = queryString.parse(location.search);
+    prePopulated = queries[field.inputName];
+  }
   return (
     <div className={cssClass}>
       <input
         name={customName || `input_${id}`}
         type={type}
-        // value={!prePopulated ? value : prePopulated}
+        value={!prePopulated ? value : prePopulated}
         required={isRequired}
         onChange={(event) => updateForm(event, field)}
         onBlur={(event) => {

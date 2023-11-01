@@ -3,6 +3,8 @@ In this repo there are unit tests which test the business logic of the form. Thi
 
 For testing we use [jest](http://jestjs.io/) and [@testing-library/react](https://stackoverflow.com/a/74019619/15070611). We use @tesing-libary because it is much more powerfull then react-test-renderer and compared to enzyme it's not dead.
 
+For mocking of fetch we use [jest-fetch-mock](https://github.com/jefflau/jest-fetch-mock) because we are lazy it also allows us to mock the response of multible api endpoints.
+
 ## folders
 Because with gravityforms you can do alot of things such as conditional form logic and custom confirmation pages. We devide these features in their own folder like this
 
