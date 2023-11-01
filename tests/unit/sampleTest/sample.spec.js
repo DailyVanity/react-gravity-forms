@@ -1,32 +1,56 @@
-jest.mock("isomorphic-unfetch");
-// jest.mock('node-fetch');
+// jest.mock("isomorphic-unfetch");
 
-import { render, screen } from "@testing-library/react";
+import {
+  render,
+  screen,
+} from "@testing-library/react";
 import * as React from "react";
 import GravityForm from "../../../src";
 
-import { Response } from "node-fetch";
-
 // use api mocks
 import GFGetRequest from "./__mocks__/get.json";
+import { act } from "react-test-renderer";
 
 describe("test if a simple newsletter signup works", () => {
   it("should render the form", async () => {
     fetch.mockReturnValue(
-      Promise.resolve({ json: () => {JSON.stringify(GFGetRequest)} })
+      Promise.resolve({
+        json: () => GFGetRequest,
+        text: () => JSON.stringify(GFGetRequest),
+      })
     );
-    // dit werkt
-    // console.log(await fetch("asd").then(res => res.json()).then(response => response))
 
-    const component = await render(
-      <GravityForm
-        backendUrl={
-          "https://backend.glamrock.dev.gohike.nl/wp/wp-json/glamrock/v1/gf/forms"
-        }
-        formID={"1"}
-        title={"titel"}
-      />
+    const component = await act(
+      async () =>
+        await render(
+          <GravityForm
+            backendUrl={
+              "https://backend.glamrock.dev.gohike.nl/wp/wp-json/glamrock/v1/gf/forms"
+            }
+            formID={"1"}
+            title={"form titel"}
+          />
+        )
     );
+
+    // for some reason this doesnt work
+    // const component = await render(
+    //   <GravityForm
+    //     backendUrl={
+    //       "https://backend.glamrock.dev.gohike.nl/wp/wp-json/glamrock/v1/gf/forms"
+    //     }
+    //     formID={"1"}
+    //     title={"form titel"}
+    //   />
+    // );
+
+
+    // ACT 
+    await screen.getByRole('heading', {
+      name: /test form mailchimp/i
+    })
+
+    // check if it matched the snapshot
     expect(component).toMatchSnapshot();
   });
 });
