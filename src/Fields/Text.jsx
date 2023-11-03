@@ -38,7 +38,6 @@ export default ({
   const { i18n } = props || {};
   const setDisabled = () =>
     cssClass === "field--street" || cssClass === "field--city";
-  console.log("touched text: ",validationMessage)
   return (
     <Box
       width={width}
