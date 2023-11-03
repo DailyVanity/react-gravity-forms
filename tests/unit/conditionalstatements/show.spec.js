@@ -1,9 +1,11 @@
 import { checkConditionalLogic } from "../../../src/Helpers/form";
 import fields from "./__mocks__/fields.json"
 
+// checkConditionalLogic() returns true if it needs to hide the field
+
 describe('test if confitional statements work', () => {
 
-  describe('"show this field if all fields match" should work', () => { 
+  describe('show this field if all fields match', () => { 
     
     // here we have matched the requirements to show the field
     test('show if all the fields logic should work if all required fields are enabled', () => {
@@ -23,7 +25,7 @@ describe('test if confitional statements work', () => {
     });
 
     // here we dont match all the requirements to show the field
-    test('show if all the fields logic should return false if not all fields are matched ', () => {
+    test('dont show field if all all requirements are matched ', () => {
       const conditions = {
         actionType: 'show',
         logicType: 'all',
@@ -39,8 +41,8 @@ describe('test if confitional statements work', () => {
     });
    })
 
-   describe('"show this field if any" match should work', () => { 
-    test('show if all the fields logic should work if', () => {
+   describe('test if "any" fields are matched', () => { 
+    test('show if one any of the fields is matched', () => {
       const conditions = {
         actionType: 'show',
         logicType: 'any',
@@ -54,12 +56,11 @@ describe('test if confitional statements work', () => {
       expect(check).toBe(false);
     });
 
-    test('show if all the fields logic should return false if not all fields are matched ', () => {
+    test('', () => {
       const conditions = {
         actionType: 'show',
         logicType: 'any',
-        rules: [
-        ],
+        rules: [],
       };
     
       const check = checkConditionalLogic(conditions,fields)

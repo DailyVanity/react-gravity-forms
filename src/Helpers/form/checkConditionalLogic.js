@@ -1,12 +1,13 @@
 export default (condition, fields = false) => {
-  const { rules, actionType } = condition;
+  const { rules, actionType,logicType } = condition;
   if (!rules) return true;
 
   const formValues = fields || formValues;
 
   // show only if is selected "All fields" (it should be tweaked in future)
   // works only "show/hide when field is equal to"
-  let hideField = actionType !== 'hide';
+  let hideField = actionType;
+  // let hideField = actionType !== 'hide';
   const hideBasedOnRules = [];
   for (let i = 0; i < rules.length; i++) {
     const { fieldId, value, operator } = rules[i];
@@ -33,15 +34,25 @@ export default (condition, fields = false) => {
       hideBasedOnRules[i] = actionType !== 'hide';
     }
 
-    // If operator is 'isnot' reverse value
+    // TODO implement more operators
+    // If operator is 'isnot' reverse value. or if the fields need to be 
     if (operator === 'isnot') {
       hideBasedOnRules[i] = !hideBasedOnRules[i];
     }
   }
 
+  // here we assume the input is hide if ... we will reverse that later
+  // check of any of the fields match
+  if(logicType === "any"){
+    hideField = hideBasedOnRules.includes(true);
+  }
+
   hideField = hideBasedOnRules.every(i => i === true);
-  // formValues[id].hideField = hideField;
-  // this.setState({ formValues });
+
+  // because we were assuming hide if .... we want to inverse that
+  if(actionType === "show"){
+    hideField = !hideField
+  }
 
   return hideField;
 };
