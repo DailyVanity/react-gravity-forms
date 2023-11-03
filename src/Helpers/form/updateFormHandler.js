@@ -12,7 +12,7 @@ export default (
   ...props
 ) => {
   const { onChange } = props;
-  const { id, type, isRequired } = field;
+  let { id, type, isRequired } = field;
   // Set new value
   let value;
 

@@ -42,5 +42,6 @@ export default (condition, fields = false) => {
   hideField = hideBasedOnRules.every(i => i === true);
   // formValues[id].hideField = hideField;
   // this.setState({ formValues });
+
   return hideField;
 };

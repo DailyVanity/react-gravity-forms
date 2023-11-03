@@ -1,0 +1,32 @@
+{
+  "5": {
+    "valid": false,
+    "value": [],
+    "label": "Untitled",
+    "pageNumber": 1,
+    "cssClass": "",
+    "isRequired": false,
+    "type": "checkbox",
+    "inputName": ""
+  },
+  "8": {
+    "valid": false,
+    "value": "",
+    "label": "straatnaam",
+    "pageNumber": 1,
+    "cssClass": "",
+    "isRequired": false,
+    "type": "text",
+    "inputName": ""
+  },
+  "10": {
+    "valid": false,
+    "value": "",
+    "label": "Untitled",
+    "pageNumber": 1,
+    "cssClass": "",
+    "isRequired": false,
+    "type": "text",
+    "inputName": ""
+  }
+}
