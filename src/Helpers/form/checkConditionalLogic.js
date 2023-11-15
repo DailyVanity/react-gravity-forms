@@ -19,7 +19,6 @@ function checkConditionalLogic(condition, fields = false) {
       ? conditionFieldValue.join('')
       : conditionFieldValue;
 
-    // Check if comparision value is empty
     // if (!value) {
     //   if (!stringValue && !value) {
     //     hideBasedOnRules[i] = actionType === 'hide';
@@ -34,34 +33,11 @@ function checkConditionalLogic(condition, fields = false) {
     //   hideBasedOnRules[i] = actionType !== 'hide';
     // }
 
-    // if the value field of the rules is empty
-    if (!value) {
-      // if the field value or field rule value is empty hide the hide
-      if (!stringValue && !value) {
-        hideBasedOnRules[i] = true;
-      } else {
-        hideBasedOnRules[i] = false;
-      }
-    }
+    // if (operator === 'isnot') {
+    //   hideBasedOnRules[i] = !hideBasedOnRules[i];
+    // }
 
-    // if field rule value equals to the fielf value
-    if (stringValue === value) {
-      hideBasedOnRules[i] = true;
-    }
-
-    // sometimes the field value is an array
-    if (stringValue && stringValue.includes(value)) {
-      hideBasedOnRules[i] = true;
-    } else {
-      hideBasedOnRules[i] = false;
-    }
-
-    hideBasedOnRules[i] = parseOperator(
-      operator,
-      hideBasedOnRules[i],
-      value,
-      stringValue
-    );
+    hideBasedOnRules[i] = parseOperator(operator, value, stringValue);
   }
 
   // check of any of the fields match
@@ -69,7 +45,7 @@ function checkConditionalLogic(condition, fields = false) {
     hideField = hideBasedOnRules.includes(false);
   }
   if (logicType === 'all') {
-    hideField = hideBasedOnRules.every((i) => i === true);
+    hideField = hideBasedOnRules.every(i => i === true);
   }
 
   // because we were assuming hide if .... we want to inverse that
@@ -77,6 +53,8 @@ function checkConditionalLogic(condition, fields = false) {
     hideField = !hideField;
   }
 
+  console.log(`hidefield for field`,hideField);
+  console.log(hideBasedOnRules);
   return hideField;
 }
 
@@ -89,38 +67,44 @@ function checkConditionalLogic(condition, fields = false) {
  * @param {string,int,float} fieldValue the value of what the user entered in the field
  * @returns {bool}
  */
-function parseOperator(operator, hideBasedOnRules, ruleValue, fieldValue) {
+function parseOperator(operator, ruleValue, fieldValue) {
+  // if (!ruleValue && !fieldValue) {
+    // return false;
+// }
+
+  // we dont do anything with hide or show. we do that later
   switch (operator) {
     // is: Evaluates this rule to true when the value of the field specified by fieldId is equal to value.
     case 'is':
-      return hideBasedOnRules;
+      return ruleValue == fieldValue;
 
     // isnot: Evaluates this rule to true when the value of the field specified by fieldId is not equal to value.
     case 'isnot':
-      return !hideBasedOnRules;
+      return ruleValue !== fieldValue;
 
     // <: Evaluates this rule to true when the value of the field specified by fieldId is less than value.
     case '<':
-      return !hideBasedOnRules;
+      return false;
 
     // >: Evaluates this rule to true when the value of the field specified by fieldId is greather than value.
     case '>':
-      return !hideBasedOnRules;
+      return false;
     // contains: Evaluates this rule to true when the value of the field specified by fieldId contains value.
     case 'contains':
-      return !hideBasedOnRules;
+      return false;
 
     // starts_with: Evaluates this rule to true when the value of the field specified by fieldId starts with value.
     case 'starts_with':
-      return !hideBasedOnRules;
+      return false;
 
     // ends_with: Evaluates this rule to true when the value of the field specified by fieldId ends with value.
     case 'ends_with':
-      return !hideBasedOnRules;
+      return false;
 
     default:
       /* eslint-disable no-console */
-      console.error(`ERROR: ${operator} is not known. `);
+      console.error(`ERROR: ${operator} is not known. showing field anyway`);
+      // return false;
   }
 }
 

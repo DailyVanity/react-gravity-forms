@@ -94,5 +94,5 @@ describe('test if confitional statements work', () => {
 
       expect(check).toBe(false);
     });
-   })
+   });
 });
