@@ -1,4 +1,4 @@
-import checkConditionalLogic from './checkConditionalLogic';
+import {checkConditionalLogic} from './checkConditionalLogic';
 import fetchForm from './fetchForm';
 import forceValidation from './forceValidation';
 import getFieldPrepopulatedValue from './getFieldPrepopulatedValue';
