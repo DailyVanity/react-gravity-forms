@@ -26,7 +26,7 @@ describe('test if confitional statements work', () => {
 
       const check = checkConditionalLogic(conditions, fields);
 
-      expect(check).toBe(false);
+      expect(check).toBe(true);
     });
 
     // here we dont match all the requirements to show the field

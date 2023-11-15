@@ -19,25 +19,25 @@ function checkConditionalLogic(condition, fields = false) {
       ? conditionFieldValue.join('')
       : conditionFieldValue;
 
-    // if (!value) {
-    //   if (!stringValue && !value) {
-    //     hideBasedOnRules[i] = actionType === 'hide';
-    //   } else {
-    //     hideBasedOnRules[i] = actionType !== 'hide';
-    //   }
-    // } else if (stringValue && value === stringValue) {
-    //   hideBasedOnRules[i] = actionType === 'hide';
-    // } else if (stringValue && stringValue.includes(value)) {
-    //   hideBasedOnRules[i] = actionType === 'hide';
-    // } else {
-    //   hideBasedOnRules[i] = actionType !== 'hide';
-    // }
+    if (!value) {
+      if (!stringValue && !value) {
+        hideBasedOnRules[i] = actionType === 'hide';
+      } else {
+        hideBasedOnRules[i] = actionType !== 'hide';
+      }
+    } else if (stringValue && value === stringValue) {
+      hideBasedOnRules[i] = actionType === 'hide';
+    } else if (stringValue && stringValue.includes(value)) {
+      hideBasedOnRules[i] = actionType === 'hide';
+    } else {
+      hideBasedOnRules[i] = actionType !== 'hide';
+    }
 
-    // if (operator === 'isnot') {
-    //   hideBasedOnRules[i] = !hideBasedOnRules[i];
-    // }
+    if (operator === 'isnot') {
+      hideBasedOnRules[i] = !hideBasedOnRules[i];
+    }
 
-    hideBasedOnRules[i] = parseOperator(operator, value, stringValue);
+    // hideBasedOnRules[i = parseOperator(operator, value, stringValue);
   }
 
   // check of any of the fields match
