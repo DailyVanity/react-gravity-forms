@@ -30,20 +30,20 @@ describe('test if confitional statements work', () => {
     });
 
     // here we dont match all the requirements to show the field
-    test('dont show field if all all requirements are matched ', () => {
+    test('dont show field if not all requirements are matched ', () => {
       const conditions = {
         actionType: 'show',
         logicType: 'all',
         rules: [
+          { fieldId: '5', operator: 'is', value: 'ongezoute boter(0 euro)' },
           { fieldId: '5', operator: 'is', value: 'gezoute boter( 0 euro)' },
-          { fieldId: '5', operator: 'is', value: 'half vollemelk( 0 euro)' },
           { fieldId: '5', operator: 'is', value: 'half vollemelk( 0 euro)' },
         ],
       };
 
       fields[5].value = [
         'ongezoute boter(0 euro)',
-        'gezoute boter( 0 euro)',
+        'gezoute boter( 0 euro)'
       ];
 
       const check = checkConditionalLogic(conditions, fields);
@@ -58,8 +58,8 @@ describe('test if confitional statements work', () => {
           actionType: 'show',
           logicType: 'any',
           rules: [
+            { fieldId: '5', operator: 'is', value: 'ongezoute boter(0 euro)' },
             { fieldId: '5', operator: 'is', value: 'gezoute boter( 0 euro)' },
-            { fieldId: '5', operator: 'is', value: 'half vollemelk( 0 euro)' },
             { fieldId: '5', operator: 'is', value: 'half vollemelk( 0 euro)' },
           ],
         };
@@ -75,16 +75,16 @@ describe('test if confitional statements work', () => {
     test('show if all the fields logic should return false if not all fields are matched ', () => {
       const conditions = {
         actionType: 'show',
-        logicType: 'all',
+        logicType: 'any',
         rules: [
+          { fieldId: '5', operator: 'is', value: 'ongezoute boter(0 euro)' },
           { fieldId: '5', operator: 'is', value: 'gezoute boter( 0 euro)' },
-          { fieldId: '5', operator: 'is', value: 'half vollemelk( 0 euro)' },
           { fieldId: '5', operator: 'is', value: 'half vollemelk( 0 euro)' },
         ],
       };
 
       fields[5].value = [
-        'ongezoute boter(0 euro)',
+        // 'ongezoute boter(0 euro)',
         'gezoute boter( 0 euro)',
         'half vollemelk( 0 euro)',
       ];

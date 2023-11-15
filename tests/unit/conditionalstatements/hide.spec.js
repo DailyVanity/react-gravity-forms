@@ -8,6 +8,7 @@ describe('test if confitional statements work', () => {
     // here we have matched the requirements to hide the field
     test('hide if all the fields logic should work if all required fields are enabled', () => {
       const conditions = {
+        debugger: true,
         actionType: 'hide',
         logicType: 'all',
         rules: [
@@ -21,7 +22,7 @@ describe('test if confitional statements work', () => {
       fields[5].value = [
         'ongezoute boter(0 euro)',
         'gezoute boter( 0 euro)',
-        'half vollemelk( 0 euro)',
+        'half vollemelk( 0 euro)'
       ];
 
       const check = checkConditionalLogic(conditions, fields);
@@ -30,13 +31,13 @@ describe('test if confitional statements work', () => {
     });
 
     // here we dont match all the requirements to hide the field
-    test('dont hide field if all all requirements are matched ', () => {
+    test('hide field if all all requirements are matched ', () => {
       const conditions = {
         actionType: 'hide',
         logicType: 'all',
         rules: [
+          { fieldId: '5', operator: 'is', value: 'ongezoute boter(0 euro)' },
           { fieldId: '5', operator: 'is', value: 'gezoute boter( 0 euro)' },
-          { fieldId: '5', operator: 'is', value: 'half vollemelk( 0 euro)' },
           { fieldId: '5', operator: 'is', value: 'half vollemelk( 0 euro)' },
         ],
       };
@@ -58,8 +59,8 @@ describe('test if confitional statements work', () => {
           actionType: 'hide',
           logicType: 'any',
           rules: [
+            { fieldId: '5', operator: 'is', value: 'ongezoute boter(0 euro)' },
             { fieldId: '5', operator: 'is', value: 'gezoute boter( 0 euro)' },
-            { fieldId: '5', operator: 'is', value: 'half vollemelk( 0 euro)' },
             { fieldId: '5', operator: 'is', value: 'half vollemelk( 0 euro)' },
           ],
         };
@@ -72,13 +73,13 @@ describe('test if confitional statements work', () => {
       expect(check).toBe(true);
     });
 
-    test('hide if all the fields logic should return false if not all fields are matched ', () => {
+    test('hide field if not all fields are matched ', () => {
       const conditions = {
         actionType: 'hide',
         logicType: 'all',
         rules: [
+          { fieldId: '5', operator: 'is', value: 'ongezoute boter(0 euro)' },
           { fieldId: '5', operator: 'is', value: 'gezoute boter( 0 euro)' },
-          { fieldId: '5', operator: 'is', value: 'half vollemelk( 0 euro)' },
           { fieldId: '5', operator: 'is', value: 'half vollemelk( 0 euro)' },
         ],
       };
@@ -91,7 +92,7 @@ describe('test if confitional statements work', () => {
 
       const check = checkConditionalLogic(conditions,fields)
 
-      expect(check).toBe(true);
+      expect(check).toBe(false);
     });
    })
 });
