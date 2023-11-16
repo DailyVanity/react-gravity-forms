@@ -19,25 +19,25 @@ function checkConditionalLogic(condition, fields = false) {
       ? conditionFieldValue.join('')
       : conditionFieldValue;
 
-    if (!value) {
-      if (!stringValue && !value) {
-        hideBasedOnRules[i] = actionType === 'hide';
-      } else {
-        hideBasedOnRules[i] = actionType !== 'hide';
-      }
-    } else if (stringValue && value === stringValue) {
-      hideBasedOnRules[i] = actionType === 'hide';
-    } else if (stringValue && stringValue.includes(value)) {
-      hideBasedOnRules[i] = actionType === 'hide';
-    } else {
-      hideBasedOnRules[i] = actionType !== 'hide';
-    }
+    // if (!value) {
+    //   if (!stringValue && !value) {
+    //     hideBasedOnRules[i] = actionType === 'hide';
+    //   } else {
+    //     hideBasedOnRules[i] = actionType !== 'hide';
+    //   }
+    // } else if (stringValue && value === stringValue) {
+    //   hideBasedOnRules[i] = actionType === 'hide';
+    // } else if (stringValue && stringValue.includes(value)) {
+    //   hideBasedOnRules[i] = actionType === 'hide';
+    // } else {
+    //   hideBasedOnRules[i] = actionType !== 'hide';
+    // }
 
-    if (operator === 'isnot') {
-      hideBasedOnRules[i] = !hideBasedOnRules[i];
-    }
+    // if (operator === 'isnot') {
+    //   hideBasedOnRules[i] = !hideBasedOnRules[i];
+    // }
 
-    // hideBasedOnRules[i = parseOperator(operator, value, stringValue);
+    hideBasedOnRules[i] = parseOperator(operator, value, stringValue);
   }
 
   // check of any of the fields match
@@ -53,8 +53,6 @@ function checkConditionalLogic(condition, fields = false) {
     hideField = !hideField;
   }
 
-  console.log(`hidefield for field`,hideField);
-  console.log(hideBasedOnRules);
   return hideField;
 }
 
@@ -68,19 +66,15 @@ function checkConditionalLogic(condition, fields = false) {
  * @returns {bool}
  */
 function parseOperator(operator, ruleValue, fieldValue) {
-  // if (!ruleValue && !fieldValue) {
-    // return false;
-// }
-
   // we dont do anything with hide or show. we do that later
   switch (operator) {
     // is: Evaluates this rule to true when the value of the field specified by fieldId is equal to value.
     case 'is':
-      return ruleValue == fieldValue;
+      return ruleValue === fieldValue;
 
     // isnot: Evaluates this rule to true when the value of the field specified by fieldId is not equal to value.
     case 'isnot':
-      return ruleValue !== fieldValue;
+      return ruleValue != fieldValue;
 
     // <: Evaluates this rule to true when the value of the field specified by fieldId is less than value.
     case '<':

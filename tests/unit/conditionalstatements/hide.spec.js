@@ -8,7 +8,6 @@ describe('test if confitional statements work', () => {
     // here we have matched the requirements to hide the field
     test('hide if all the fields logic should work if all required fields are enabled', () => {
       const conditions = {
-        debugger: true,
         actionType: 'hide',
         logicType: 'all',
         rules: [
