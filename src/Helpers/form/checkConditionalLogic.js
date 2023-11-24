@@ -53,36 +53,35 @@ function parseOperator(operator, ruleValue, fieldValue) {
 
     // isnot: Evaluates this rule to true when the value of the field specified by fieldId is not equal to value.
     case 'isnot':
-      return ruleValue != fieldValue;
+      if (fieldValue instanceof Array) {
+        return !fieldValue.includes(ruleValue);
+      } else {
+        return ruleValue != fieldValue;
+      }
 
     // <: Evaluates this rule to true when the value of the field specified by fieldId is less than value.
     case '<':
       throw new Error('not Implemented');
-      return false;
 
     // >: Evaluates this rule to true when the value of the field specified by fieldId is greather than value.
     case '>':
       throw new Error('not Implemented');
-      return false;
     // contains: Evaluates this rule to true when the value of the field specified by fieldId contains value.
     case 'contains':
       throw new Error('not Implemented');
-      return false;
 
     // starts_with: Evaluates this rule to true when the value of the field specified by fieldId starts with value.
     case 'starts_with':
       throw new Error('not Implemented');
-      return false;
 
     // ends_with: Evaluates this rule to true when the value of the field specified by fieldId ends with value.
     case 'ends_with':
       throw new Error('not Implemented');
-      return false;
 
     default:
       /* eslint-disable no-console */
       console.error(`ERROR: ${operator} is not known. showing field anyway`);
-    // return false;
+    return false;
   }
 }
 
