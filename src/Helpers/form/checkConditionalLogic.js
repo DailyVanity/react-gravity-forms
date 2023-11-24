@@ -1,20 +1,17 @@
-/* eslint-disable import/no-anonymous-default-export */
 function checkConditionalLogic(condition, fields = false) {
   const { rules, actionType, logicType } = condition;
   if (!rules) return true;
   const formValues = fields || formValues;
 
-  // show only if is selected 'All fields' (it should be tweaked in future)
-  let hideField = actionType;
   const hideBasedOnRules = [];
 
-  for (let i = 0; i < rules.length; i++) {
-    const { fieldId, value, operator } = rules[i];
-
+  rules.forEach((rule, i) => {
+    const { fieldId, value, operator } = rule;
     hideBasedOnRules[i] = parseOperator(operator, value, formValues[fieldId].value);
-  }
+  });
 
   // check of any of the fields match
+  let hideField;  
   if (logicType === 'any') {
     hideField = hideBasedOnRules.includes(false);
   }
@@ -81,7 +78,7 @@ function parseOperator(operator, ruleValue, fieldValue) {
     default:
       /* eslint-disable no-console */
       console.error(`ERROR: ${operator} is not known. showing field anyway`);
-    return false;
+      return false;
   }
 }
 
