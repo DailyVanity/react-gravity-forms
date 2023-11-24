@@ -12,14 +12,7 @@ function checkConditionalLogic(condition, fields = false) {
     hideBasedOnRules[i] = parseOperator(operator, value, field.value);
   });
 
-  // check of any of the fields match
-  let hideField;
-  if (logicType === 'any') {
-    hideField = hideBasedOnRules.includes(true);
-  }
-  if (logicType === 'all') {
-    hideField = hideBasedOnRules.every((i) => i === true);
-  }
+  let hideField = parseLogicType(logicType,hideBasedOnRules);
 
   // because we were assuming hide if .... we want to inverse that
   if (actionType === 'show') {
@@ -84,4 +77,19 @@ function parseOperator(operator, ruleValue, fieldValue) {
   }
 }
 
-export { checkConditionalLogic, parseOperator };
+/**
+ * parse the logic type for matched fields
+ * @param {string} logicType GF logic type this could be any or all
+ * @param {array}} hideBasedOnRules
+ * @returns 
+ */
+function parseLogicType(logicType,hideBasedOnRules) {
+  if (logicType === 'any') {
+    return hideBasedOnRules.includes(true);
+  }
+  if (logicType === 'all') {
+    return hideBasedOnRules.every((i) => i === true);
+  }
+}
+
+export { parseLogicType,checkConditionalLogic, parseOperator };
