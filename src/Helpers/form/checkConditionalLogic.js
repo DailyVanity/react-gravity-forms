@@ -4,40 +4,14 @@ function checkConditionalLogic(condition, fields = false) {
   if (!rules) return true;
   const formValues = fields || formValues;
 
-  // show only if is selected "All fields" (it should be tweaked in future)
+  // show only if is selected 'All fields' (it should be tweaked in future)
   let hideField = actionType;
   const hideBasedOnRules = [];
 
   for (let i = 0; i < rules.length; i++) {
     const { fieldId, value, operator } = rules[i];
-    const conditionFieldValue =
-      formValues[fieldId].value && formValues[fieldId].value.value
-        ? formValues[fieldId].value.value
-        : formValues[fieldId].value || false;
 
-    const stringValue = Array.isArray(conditionFieldValue)
-      ? conditionFieldValue.join('')
-      : conditionFieldValue;
-
-    // if (!value) {
-    //   if (!stringValue && !value) {
-    //     hideBasedOnRules[i] = actionType === 'hide';
-    //   } else {
-    //     hideBasedOnRules[i] = actionType !== 'hide';
-    //   }
-    // } else if (stringValue && value === stringValue) {
-    //   hideBasedOnRules[i] = actionType === 'hide';
-    // } else if (stringValue && stringValue.includes(value)) {
-    //   hideBasedOnRules[i] = actionType === 'hide';
-    // } else {
-    //   hideBasedOnRules[i] = actionType !== 'hide';
-    // }
-
-    // if (operator === 'isnot') {
-    //   hideBasedOnRules[i] = !hideBasedOnRules[i];
-    // }
-
-    hideBasedOnRules[i] = parseOperator(operator, value, stringValue);
+    hideBasedOnRules[i] = parseOperator(operator, value, formValues[fieldId].value);
   }
 
   // check of any of the fields match
@@ -45,7 +19,7 @@ function checkConditionalLogic(condition, fields = false) {
     hideField = hideBasedOnRules.includes(false);
   }
   if (logicType === 'all') {
-    hideField = hideBasedOnRules.every(i => i === true);
+    hideField = hideBasedOnRules.every((i) => i === true);
   }
 
   // because we were assuming hide if .... we want to inverse that
@@ -59,6 +33,7 @@ function checkConditionalLogic(condition, fields = false) {
 /**
  * these rules parse the conditional logic object from gravityforms
  * implements: https://docs.gravityforms.com/conditional-logic-object/
+ * based on: https://bitbucket.org/gohike/gravityforms-mirror/src/47ddc8c2343d090f25d2c03892120d095be06245/js/conditional_logic.js?at=master#conditional_logic.js-301
  * @param {string} operator
  * @param {bool} hideBasedOnRules does the field match
  * @param {string} ruleValue the value of the field of the conditional logic
@@ -70,7 +45,11 @@ function parseOperator(operator, ruleValue, fieldValue) {
   switch (operator) {
     // is: Evaluates this rule to true when the value of the field specified by fieldId is equal to value.
     case 'is':
-      return ruleValue === fieldValue;
+      if (fieldValue instanceof Array) {
+        return fieldValue.includes(ruleValue);
+      } else {
+        return ruleValue === fieldValue;
+      }
 
     // isnot: Evaluates this rule to true when the value of the field specified by fieldId is not equal to value.
     case 'isnot':
@@ -78,27 +57,32 @@ function parseOperator(operator, ruleValue, fieldValue) {
 
     // <: Evaluates this rule to true when the value of the field specified by fieldId is less than value.
     case '<':
+      throw new Error('not Implemented');
       return false;
 
     // >: Evaluates this rule to true when the value of the field specified by fieldId is greather than value.
     case '>':
+      throw new Error('not Implemented');
       return false;
     // contains: Evaluates this rule to true when the value of the field specified by fieldId contains value.
     case 'contains':
+      throw new Error('not Implemented');
       return false;
 
     // starts_with: Evaluates this rule to true when the value of the field specified by fieldId starts with value.
     case 'starts_with':
+      throw new Error('not Implemented');
       return false;
 
     // ends_with: Evaluates this rule to true when the value of the field specified by fieldId ends with value.
     case 'ends_with':
+      throw new Error('not Implemented');
       return false;
 
     default:
       /* eslint-disable no-console */
       console.error(`ERROR: ${operator} is not known. showing field anyway`);
-      // return false;
+    // return false;
   }
 }
 

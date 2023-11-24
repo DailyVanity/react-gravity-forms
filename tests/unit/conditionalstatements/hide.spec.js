@@ -6,14 +6,14 @@ import fields from './__mocks__/fields.json';
 describe('test if confitional statements work', () => {
   describe('hide this field if all fields match', () => {
     // here we have matched the requirements to hide the field
-    test('hide if all the fields logic should work if all required fields are enabled', () => {
+    test('hide if all the rules are matched', () => {
       const conditions = {
         actionType: 'hide',
         logicType: 'all',
         rules: [
           { fieldId: '5', operator: 'is', value: 'ongezoute boter(0 euro)' },
           { fieldId: '5', operator: 'is', value: 'gezoute boter( 0 euro)' },
-          { fieldId: '5', operator: 'is', value: 'half vollemelk( 0 euro)' },
+          { fieldId: '5', operator: 'is', value: 'half vollemelk( 0 euro)' }
         ],
       };
 
@@ -37,13 +37,13 @@ describe('test if confitional statements work', () => {
         rules: [
           { fieldId: '5', operator: 'is', value: 'ongezoute boter(0 euro)' },
           { fieldId: '5', operator: 'is', value: 'gezoute boter( 0 euro)' },
-          { fieldId: '5', operator: 'is', value: 'half vollemelk( 0 euro)' },
+          { fieldId: '5', operator: 'is', value: 'half vollemelk( 0 euro)' }
         ],
       };
 
       fields[5].value = [
         'ongezoute boter(0 euro)',
-        'gezoute boter( 0 euro)',
+        'gezoute boter( 0 euro)'
       ];
 
       const check = checkConditionalLogic(conditions, fields);

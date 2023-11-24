@@ -1,7 +1,7 @@
 import fetch from "isomorphic-unfetch";
 import { getFieldPrepopulatedValue } from "./index";
 import { validateField } from "../validation";
-import checkConditionalLogic from "./checkConditionalLogic";
+import {checkConditionalLogic} from "./checkConditionalLogic";
 
 async function fetchForm({
   initialPage,

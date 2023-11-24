@@ -1,5 +1,5 @@
 import { validateField } from "../validation";
-import checkConditionalLogic from "./checkConditionalLogic";
+import {checkConditionalLogic} from "./checkConditionalLogic";
 
 export default (
   field,
