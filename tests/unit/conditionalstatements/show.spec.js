@@ -1,4 +1,4 @@
-import { checkConditionalLogic } from '../../../src/Helpers/form/checkConditionalLogic';
+import { checkConditionalLogic } from '../../../src/Helpers/form';
 import fields from './__mocks__/fields.json';
 
 // checkConditionalLogic() returns true if it needs to hide the field

@@ -1,19 +1,21 @@
 function checkConditionalLogic(condition, fields = false) {
   const { rules, actionType, logicType } = condition;
   if (!rules) return true;
-  const formValues = fields || formValues;
 
   const hideBasedOnRules = [];
 
-  rules.forEach((rule, i) => {
-    const { fieldId, value, operator } = rule;
-    hideBasedOnRules[i] = parseOperator(operator, value, formValues[fieldId].value);
+  rules.forEach(({ fieldId, value, operator }, i) => {
+    // the field the user sees on the frontend
+    const field = fields[fieldId];
+
+    // check if the matchValue and Field value match
+    hideBasedOnRules[i] = parseOperator(operator, value, field.value);
   });
 
   // check of any of the fields match
-  let hideField;  
+  let hideField;
   if (logicType === 'any') {
-    hideField = hideBasedOnRules.includes(false);
+    hideField = hideBasedOnRules.includes(true);
   }
   if (logicType === 'all') {
     hideField = hideBasedOnRules.every((i) => i === true);
