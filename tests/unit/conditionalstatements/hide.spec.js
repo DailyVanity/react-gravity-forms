@@ -4,16 +4,16 @@ import fields from './__mocks__/fields.json';
 // checkConditionalLogic() returns true if it needs to hide the field
 
 describe('test if confitional statements work', () => {
-  describe('hide this field if all fields match', () => {
+  describe('hide field is all match', () => {
     // here we have matched the requirements to hide the field
-    test('hide if all the rules are matched', () => {
+    test('all is matched', () => {
       const conditions = {
         actionType: 'hide',
         logicType: 'all',
         rules: [
           { fieldId: '5', operator: 'is', value: 'ongezoute boter(0 euro)' },
           { fieldId: '5', operator: 'is', value: 'gezoute boter( 0 euro)' },
-          { fieldId: '5', operator: 'is', value: 'half vollemelk( 0 euro)' }
+          { fieldId: '5', operator: 'is', value: 'half vollemelk( 0 euro)' },
         ],
       };
 
@@ -21,7 +21,7 @@ describe('test if confitional statements work', () => {
       fields[5].value = [
         'ongezoute boter(0 euro)',
         'gezoute boter( 0 euro)',
-        'half vollemelk( 0 euro)'
+        'half vollemelk( 0 euro)',
       ];
 
       const check = checkConditionalLogic(conditions, fields);
@@ -30,21 +30,18 @@ describe('test if confitional statements work', () => {
     });
 
     // here we dont match all the requirements to hide the field
-    test('hide field if all all requirements are matched ', () => {
+    test('not all is matched ', () => {
       const conditions = {
         actionType: 'hide',
         logicType: 'all',
         rules: [
           { fieldId: '5', operator: 'is', value: 'ongezoute boter(0 euro)' },
           { fieldId: '5', operator: 'is', value: 'gezoute boter( 0 euro)' },
-          { fieldId: '5', operator: 'is', value: 'half vollemelk( 0 euro)' }
+          { fieldId: '5', operator: 'is', value: 'half vollemelk( 0 euro)' },
         ],
       };
 
-      fields[5].value = [
-        'ongezoute boter(0 euro)',
-        'gezoute boter( 0 euro)'
-      ];
+      fields[5].value = ['ongezoute boter(0 euro)', 'gezoute boter( 0 euro)'];
 
       const check = checkConditionalLogic(conditions, fields);
 
@@ -52,27 +49,25 @@ describe('test if confitional statements work', () => {
     });
   });
 
-   describe('test if "any" fields are matched', () => {
-    test('hide if one any of the fields is matched', () => {
+  describe('hide if any field is matched', () => {
+    test('if 1 field is matched', () => {
       const conditions = {
-          actionType: 'hide',
-          logicType: 'any',
-          rules: [
-            { fieldId: '5', operator: 'is', value: 'ongezoute boter(0 euro)' },
-            { fieldId: '5', operator: 'is', value: 'gezoute boter( 0 euro)' },
-            { fieldId: '5', operator: 'is', value: 'half vollemelk( 0 euro)' },
-          ],
-        };
+        actionType: 'hide',
+        logicType: 'any',
+        rules: [
+          { fieldId: '5', operator: 'is', value: 'ongezoute boter(0 euro)' },
+          { fieldId: '5', operator: 'is', value: 'gezoute boter( 0 euro)' },
+          { fieldId: '5', operator: 'is', value: 'half vollemelk( 0 euro)' },
+        ],
+      };
 
-        fields[5].value = [
-          'ongezoute boter(0 euro)',
-        ];
-      const check = checkConditionalLogic(conditions,fields)
+      fields[5].value = ['ongezoute boter(0 euro)'];
+      const check = checkConditionalLogic(conditions, fields);
 
       expect(check).toBe(true);
     });
 
-    test('hide field if not all fields are matched ', () => {
+    test('hide if all fields are matched ', () => {
       const conditions = {
         actionType: 'hide',
         logicType: 'all',
@@ -86,12 +81,30 @@ describe('test if confitional statements work', () => {
       fields[5].value = [
         'ongezoute boter(0 euro)',
         'gezoute boter( 0 euro)',
-        // 'half vollemelk( 0 euro)',
+        'half vollemelk( 0 euro)',
       ];
 
-      const check = checkConditionalLogic(conditions,fields)
+      const check = checkConditionalLogic(conditions, fields);
+
+      expect(check).toBe(true);
+    });
+
+    test('show if no fields are matched ', () => {
+      const conditions = {
+        actionType: 'hide',
+        logicType: 'all',
+        rules: [
+          { fieldId: '5', operator: 'is', value: 'ongezoute boter(0 euro)' },
+          { fieldId: '5', operator: 'is', value: 'gezoute boter( 0 euro)' },
+          { fieldId: '5', operator: 'is', value: 'half vollemelk( 0 euro)' },
+        ],
+      };
+
+      fields[5].value = [];
+
+      const check = checkConditionalLogic(conditions, fields);
 
       expect(check).toBe(false);
     });
-   });
+  });
 });

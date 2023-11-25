@@ -47,7 +47,7 @@ describe("test if a simple newsletter signup works", () => {
     // ACT 
     await screen.getByRole('heading', {
       name: /test form mailchimp/i
-    })
+    });
 
     // check if it matched the snapshot
     expect(component).toMatchSnapshot();

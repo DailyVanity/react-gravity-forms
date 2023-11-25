@@ -75,14 +75,14 @@ function parseOperator(operator, ruleValue, fieldValue) {
       return ruleValue.indexOf(fieldValue) == 0;
 
     // ends_with: Evaluates this rule to true when the value of the field specified by fieldId ends with value.
-    case 'ends_with':
+    case 'ends_with':{
       const start = ruleValue.length - fieldValue.length;
       if(start < 0){
         return false;
       }
       const tail = ruleValue.substring(start);
       return fieldValue == tail;
-
+    }
     default:
       /* eslint-disable no-console */
       console.error(`ERROR: ${operator} is not known. showing field anyway`);
