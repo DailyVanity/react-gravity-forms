@@ -6,13 +6,27 @@ function checkConditionalLogic(condition, fields = false) {
 
   rules.forEach(({ fieldId, value, operator }, i) => {
     // the field the user sees on the frontend
-    const field = fields[fieldId];
+    const fieldValue = fields[fieldId].value;
 
-    // check if the matchValue and Field value match
-    hideBasedOnRules[i] = parseOperator(operator, value, field.value);
+    if (fieldValue instanceof Array) {
+      let matchCount = 0;
+      fieldValue.length > 0 &&
+        fieldValue.forEach((subField) => {
+          if (parseOperator(operator, value, subField)) {
+            matchCount++;
+          }
+        });
+
+      // check if all the values match the rule value.
+      hideBasedOnRules[i] =
+        operator == 'isnot' ? matchCount == value.length : matchCount > 0;
+    } else {
+      // check if the matchValue and Field value match
+      hideBasedOnRules[i] = parseOperator(operator, value, fieldValue);
+    }
   });
 
-  let hideField = parseLogicType(logicType,hideBasedOnRules);
+  let hideField = parseLogicType(logicType, hideBasedOnRules);
 
   // because we were assuming hide if .... we want to inverse that
   if (actionType === 'show') {
@@ -33,42 +47,41 @@ function checkConditionalLogic(condition, fields = false) {
  * @returns {bool}
  */
 function parseOperator(operator, ruleValue, fieldValue) {
+
   // we dont do anything with hide or show. we do that later
   switch (operator) {
     // is: Evaluates this rule to true when the value of the field specified by fieldId is equal to value.
     case 'is':
-      if (fieldValue instanceof Array) {
-        return fieldValue.includes(ruleValue);
-      } else {
-        return ruleValue === fieldValue;
-      }
+      return ruleValue === fieldValue;
 
     // isnot: Evaluates this rule to true when the value of the field specified by fieldId is not equal to value.
     case 'isnot':
-      if (fieldValue instanceof Array) {
-        return !fieldValue.includes(ruleValue);
-      } else {
-        return ruleValue != fieldValue;
-      }
+      return ruleValue != fieldValue;
 
     // <: Evaluates this rule to true when the value of the field specified by fieldId is less than value.
     case '<':
-      throw new Error('not Implemented');
+      return ruleValue < fieldValue;
 
     // >: Evaluates this rule to true when the value of the field specified by fieldId is greather than value.
     case '>':
-      throw new Error('not Implemented');
+      return ruleValue > fieldValue;
+
     // contains: Evaluates this rule to true when the value of the field specified by fieldId contains value.
     case 'contains':
-      throw new Error('not Implemented');
+      return ruleValue.indexOf(fieldValue) >= 0; 
 
     // starts_with: Evaluates this rule to true when the value of the field specified by fieldId starts with value.
     case 'starts_with':
-      throw new Error('not Implemented');
+      return ruleValue.indexOf(fieldValue) == 0;
 
     // ends_with: Evaluates this rule to true when the value of the field specified by fieldId ends with value.
     case 'ends_with':
-      throw new Error('not Implemented');
+      const start = ruleValue.length - fieldValue.length;
+      if(start < 0){
+        return false;
+      }
+      const tail = ruleValue.substring(start);
+      return fieldValue == tail;
 
     default:
       /* eslint-disable no-console */
@@ -81,9 +94,9 @@ function parseOperator(operator, ruleValue, fieldValue) {
  * parse the logic type for matched fields
  * @param {string} logicType GF logic type this could be any or all
  * @param {array}} hideBasedOnRules
- * @returns 
+ * @returns
  */
-function parseLogicType(logicType,hideBasedOnRules) {
+function parseLogicType(logicType, hideBasedOnRules) {
   if (logicType === 'any') {
     return hideBasedOnRules.includes(true);
   }
@@ -92,4 +105,4 @@ function parseLogicType(logicType,hideBasedOnRules) {
   }
 }
 
-export { parseLogicType,checkConditionalLogic, parseOperator };
+export { parseLogicType, checkConditionalLogic, parseOperator };
