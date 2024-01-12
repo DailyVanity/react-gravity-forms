@@ -59,10 +59,10 @@ async function onSubmit(
             }
           }
           const confirmationMessage = response.confirmation_message;
-          const { type, link } = confirmationMessage || false;
-          if (type && link && type === "redirect") {
+          const { confirmation_type, confirmation_redirect } = confirmationMessage || false;
+          if (confirmation_type && confirmation_redirect && confirmation_type === "redirect") {
             if (typeof window !== "undefined") {
-              window.location.replace(link);
+              window.location.replace(confirmation_redirect);
               return false;
             }
           }
