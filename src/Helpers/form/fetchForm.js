@@ -1,7 +1,7 @@
 import fetch from "isomorphic-unfetch";
 import { getFieldPrepopulatedValue } from "./index";
 import { validateField } from "../validation";
-import checkConditionalLogic from "./checkConditionalLogic";
+import {checkConditionalLogic} from "./checkConditionalLogic";
 
 async function fetchForm({
   initialPage,
@@ -29,11 +29,12 @@ async function fetchForm({
   const requestUrl = `${backendUrl}/${formID}${
     queryString ? `?${queryString}` : ""
   }`;
-
+  
   const form = await fetch(requestUrl, fetchOptions)
     .then(resp => resp.json())
     .then(response => response)
-    .catch(() => false);
+    .catch((err) => console.log(err));
+
 
   if (form) {
     const formValues = {};

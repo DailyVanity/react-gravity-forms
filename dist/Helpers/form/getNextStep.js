@@ -1,1 +1,1 @@
-"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports["default"]=void 0;var getNextStep=function(a,b,c){var d=a+1,e=b[a-1];return!!c[e]&&(!0===c[e].hideField&&(d=getNextStep(d)),d)},_default=getNextStep;exports["default"]=_default;
+"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.default=void 0;const getNextStep=(a,b,c)=>{let d=a+1;const e=b[a-1];return!!c[e]&&(!0===c[e].hideField&&(d=getNextStep(d)),d)};var _default=exports.default=getNextStep;

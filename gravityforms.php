@@ -57,3 +57,22 @@ add_action('rest_api_init', function () {
   $api_namespace = 'glamrock/v1';
   new Headless_GravityForms($api_namespace);
 });
+
+/**
+ * removes the redirect header from rest
+ */
+add_filter( 'rest_post_dispatch', function ( $response, $server, $request ) {
+  if ( $response->get_status() !== 200
+       || $request->get_method() !== 'POST'
+       || empty( $request['form_id'] )
+       || $request->get_route() !== "/gf/v2/forms/{$request['form_id']}/submissions"
+  ) {
+      return $response;
+  }
+
+  $headers = $response->get_headers();
+  unset( $headers['Location'] );
+  $response->set_headers( $headers );
+
+  return $response;
+}, 10, 3 );

@@ -10,6 +10,10 @@ This module includes a react component for dropping Gravity Forms from your Word
 $ npm install --save react-gravity-form
 ```
 
+## testing
+[see the testing readme here](./tests/readme.md)
+
+
 ### Backend
 
 Make sure to create a custom GF endpoint to fetch the form. See [example](https://bitbucket.org/gohike/gravity-forms/src/devweek/gravityforms.php)
@@ -89,6 +93,26 @@ function adjust_date_field($form){
 
 We use [recaptcha package](https://www.npmjs.com/package/react-google-recaptcha)
 To make it work pass `sitekey` as property to GravityForm component
+
+## confirmation redirects
+When you configure a confirmation redirect to a url or page GF will redirect the submission api call to that page thus causing the submission to fail. you can fix this by adding the following snippit to your wordpress theme.
+```
+add_filter( 'rest_post_dispatch', function ( $response, $server, $request ) {
+    if ( $response->get_status() !== 200
+         || $request->get_method() !== 'POST'
+         || empty( $request['form_id'] )
+         || $request->get_route() !== "/gf/v2/forms/{$request['form_id']}/submissions"
+    ) {
+        return $response;
+    }
+ 
+    $headers = $response->get_headers();
+    unset( $headers['Location'] );
+    $response->set_headers( $headers );
+ 
+    return $response;
+}, 10, 3 );
+```
 
 ### Change validation messages from backend
 
