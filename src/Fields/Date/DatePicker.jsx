@@ -4,9 +4,6 @@ import DatePicker from 'react-datepicker';
 // components
 import ValidationMessage from '../../FormElements/ValidationMessage';
 
-// styles
-import 'react-datepicker/dist/react-datepicker.css';
-
 export default ({
   format,
   defaultProps,

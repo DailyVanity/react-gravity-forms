@@ -14,6 +14,8 @@ $ npm install --save react-gravity-form
 [see the testing readme here](./tests/readme.md)
 
 
+
+
 ### Backend
 
 Make sure to create a custom GF endpoint to fetch the form. See [example](https://bitbucket.org/gohike/gravity-forms/src/devweek/gravityforms.php)
@@ -87,6 +89,12 @@ function adjust_date_field($form){
 	}
 	return $form;
 }
+```
+
+The `Date Picker` functionality in our form utilizes the `react-datepicker` package. Please note that this package does not include default styles. To ensure proper styling of the date picker, you must either provide your own custom styles or import the default styles from the package. To use the default styles, include the following import statement in your code:
+
+```javascript
+import "react-datepicker/dist/react-datepicker.css";
 ```
 
 ### Captcha
