@@ -36,13 +36,13 @@ async function fetchForm({
     .catch((err) => console.log(err));
 
 
-  if (form) {
+  if (form && form?.fields) {
     const formValues = {};
     const conditionFields = [];
     const conditionalIds = [];
     const pages = [];
     // eslint-disable-next-line no-restricted-syntax
-    for (const field of form.fields) {
+    for (const field of form?.fields) {
       let value;
 
       if (field.type === "page") {
