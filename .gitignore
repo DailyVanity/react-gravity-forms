@@ -2,3 +2,7 @@
 .history
 node_modules/
 yarn.lock
+
+
+# we dont need the dist folder
+/dist

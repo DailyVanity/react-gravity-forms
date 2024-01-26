@@ -203,7 +203,7 @@ const validateField = (value, field) => {
     return passwordValidation(value, field);
   }
 
-  // for selector fields
+  // for selector fields such as dropdown
   if (type === 'select') {
     return selectValidation(required, value, field.placeholder);
   }
