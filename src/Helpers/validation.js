@@ -203,10 +203,14 @@ const validateField = (value, field) => {
     return passwordValidation(value, field);
   }
 
+  // for selector fields
+  if (type === 'select') {
+    return selectValidation(required, value, field.placeholder);
+  }
+
   if (type === 'email' && field.emailConfirmEnabled) {
     return emailValidation(value, field);
   }
-
   // Check if empty
   const empty = isEmpty(value);
   let validationMessage = '';
