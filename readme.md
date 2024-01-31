@@ -3,6 +3,7 @@
 [![Version](https://img.shields.io/npm/v/react-gravity-form.svg)](https://www.npmjs.com/package/react-gravity-form)
 
 This module includes a react component for dropping Gravity Forms from your Wordpress site into your react applications.
+If you are considering using this package please use the new [next-gravity-forms](https://github.com/robmarshall/next-gravity-forms/) package since this one will be deprecated in the near feature.
 
 ## Installation
 
