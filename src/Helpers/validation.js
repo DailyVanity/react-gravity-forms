@@ -55,7 +55,13 @@ const isRequired = (required, empty, message) => {
   return false;
 };
 
-const selectValidation = (required, value, placeholder) => !(value === placeholder && required);
+const selectValidation = (required, value,message) => {
+  if(!value && required){
+    const customMessage = getMessage(message, 'select');
+    return customMessage || 'Please select an option';
+  }
+  return false
+};
 
 const checkboxValidation = (values, message) => {
   if (values.length < 1) {
@@ -205,7 +211,7 @@ const validateField = (value, field) => {
 
   // for selector fields such as dropdown
   if (type === 'select') {
-    return selectValidation(required, value, field.placeholder);
+    return selectValidation(required, value, field.errorMessage);
   }
 
   if (type === 'email' && field.emailConfirmEnabled) {

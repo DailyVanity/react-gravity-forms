@@ -36,6 +36,7 @@ export default ({
   let selected = "";
   // Map options
   const options = choices.map(choice => {
+    console.log("keuzes",choice)
     const item = {
       value: choice.value,
       label: choice.text,
@@ -49,22 +50,22 @@ export default ({
   const [selectedOption, selectOption] = useState(value || selected);
   // Handle change
   const handleChange = option => {
-    selectOption(option);
     const event = {
       target: {
         value: option,
       },
     };
+    selectOption(option);
     updateForm(event, field);
   };
   // Handle Blur
   const handleBlur = () => {
-    const event = {
-      target: {
-        value: selectedOption,
-      },
-    };
-    updateForm(event, field);
+    // const event = {
+    //   target: {
+    //     value: selectedOption,
+    //   },
+    // };
+    // updateForm(event, field);
     setTouched(id);
     setFocusClass(selectedOption && selectedOption.value);
     setFocusClasses("");
@@ -76,7 +77,9 @@ export default ({
   } = styledComponents || false;
 
   const RSelect = ReactSelect || Select;
-
+  console.log('valmsg',validationMessage)
+  console.log('error?',error)
+  console.log('touched?',touched)
   return (
     <Box
       width={width}
