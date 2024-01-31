@@ -12,7 +12,7 @@ function checkConditionalLogic(condition, fields = false) {
       let matchCount = 0;
       fieldValue.length > 0 &&
         fieldValue.forEach((subField) => {
-          if (parseOperator(operator, value, subField)) {
+          if (parseOperator(subField,operator, value)) {
             matchCount++;
           }
         });
@@ -22,7 +22,7 @@ function checkConditionalLogic(condition, fields = false) {
         operator == 'isnot' ? matchCount == value.length : matchCount > 0;
     } else {
       // check if the matchValue and Field value match
-      hideBasedOnRules[i] = parseOperator(operator, value, fieldValue);
+      hideBasedOnRules[i] = parseOperator(fieldValue,operator, value);
     }
   });
 
@@ -46,8 +46,7 @@ function checkConditionalLogic(condition, fields = false) {
  * @param {string,int,float} fieldValue the value of what the user entered in the field
  * @returns {bool}
  */
-function parseOperator(operator, ruleValue, fieldValue) {
-
+function parseOperator(fieldValue, operator, ruleValue) {
   // we dont do anything with hide or show. we do that later
   switch (operator) {
     // is: Evaluates this rule to true when the value of the field specified by fieldId is equal to value.
@@ -60,28 +59,28 @@ function parseOperator(operator, ruleValue, fieldValue) {
 
     // <: Evaluates this rule to true when the value of the field specified by fieldId is less than value.
     case '<':
-      return ruleValue < fieldValue;
+      return fieldValue < ruleValue;
 
     // >: Evaluates this rule to true when the value of the field specified by fieldId is greather than value.
     case '>':
-      return ruleValue > fieldValue;
+      return fieldValue > ruleValue;
 
     // contains: Evaluates this rule to true when the value of the field specified by fieldId contains value.
     case 'contains':
-      return ruleValue.indexOf(fieldValue) >= 0; 
+      return fieldValue.indexOf(ruleValue) >= 0; 
 
     // starts_with: Evaluates this rule to true when the value of the field specified by fieldId starts with value.
     case 'starts_with':
-      return ruleValue.indexOf(fieldValue) == 0;
+      return fieldValue.indexOf(ruleValue) == 0;
 
     // ends_with: Evaluates this rule to true when the value of the field specified by fieldId ends with value.
     case 'ends_with':{
-      const start = ruleValue.length - fieldValue.length;
+      const start = fieldValue.length - ruleValue.length;
       if(start < 0){
         return false;
       }
-      const tail = ruleValue.substring(start);
-      return fieldValue == tail;
+      const tail = fieldValue.substring(start);
+      return ruleValue == tail;
     }
     default:
       /* eslint-disable no-console */
