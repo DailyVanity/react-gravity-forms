@@ -10,7 +10,8 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "build": "babel ./src --out-dir ./dist",
-    "prepublishOnly": "babel ./src --out-dir ./dist -s inline"
+    "prepublishOnly": "babel ./src --out-dir ./dist -s inline",
+    "prepare": "npm run build"
   },
   "repository": {
     "type": "git",
