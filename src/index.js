@@ -156,7 +156,7 @@ const GravityForm = props => {
       const { formID, backendUrl, jumpToConfirmation, onSubmitSuccess, onError } = props;
       const gfSubmissionUrl = backendUrl.substring(0, backendUrl.indexOf('/wp-json'));
 
-      fetch(`${gfSubmissionUrl}/wp-json/gf/v2/forms/${formID}/submissions`, {
+      fetch(`${backendUrl}/${formID}/submissions`, {
         method: 'POST',
         body: formData,
       })
